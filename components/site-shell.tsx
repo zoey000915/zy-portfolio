@@ -92,5 +92,5 @@ export function SiteHeader() {
 }
 
 export function SiteFooter() {
-  return <footer id="contact" className="site-footer"><div className="shell footer-grid"><div><p className="eyebrow">联系我 · CONTACT</p><h2>谢谢浏览，如有项目或设计相关问题，欢迎与我联系</h2></div><a href="mailto:zhangyi_yeee@163.com">zhangyi_yeee@163.com <ArrowUpRight size={18} /></a></div><div className="shell footer-meta"><span>© 2026 Zhang Yi</span></div></footer>;
+  return <footer id="contact" className="site-footer"><div className="shell footer-grid"><div><p className="eyebrow">联系我 · CONTACT</p><h2>谢谢浏览，如有项目或设计相关问题，欢迎与我联系</h2></div><a href="mailto:zhangyi_yeee@163.com">zhangyi_yeee@163.com <ArrowUpRight size={18} /></a></div><div className="shell footer-meta"><span>© 2026 Zhang Yi</span><a href="https://beian.miit.gov.cn/" target="_blank" rel="noreferrer">浙ICP备2026077128号-1</a></div></footer>;
 }
