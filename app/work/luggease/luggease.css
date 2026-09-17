@@ -126,3 +126,234 @@
   .lugg-refinement-landing .lugg-device{width:150px}
   .lugg-refinement-booking .lugg-device{width:150px}
 }
+
+/* Core Experience 01 only: devices shrink inside their own grid column. */
+.lugg-experience-card.booking {
+  grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
+}
+.lugg-experience-card.booking .lugg-experience-copy { min-width: 0; width: 100%; }
+.lugg-experience-card.booking .lugg-experience-copy ul { flex-wrap: wrap; white-space: normal; }
+.lugg-experience-card.booking .lugg-phone-group {
+  display: flex;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+.lugg-experience-card.booking .lugg-phone-group .lugg-device {
+  flex: 1 1 142px;
+  width: 100%;
+  max-width: 142px;
+  min-width: 0;
+  transform: none;
+}
+.lugg-experience-card.booking .lugg-phone-group .lugg-device:first-child {
+  flex-basis: 150px;
+  max-width: 150px;
+}
+.lugg-experience-card.booking .lugg-device img { width: 100%; height: auto; object-fit: contain; }
+@media (900px <= width < 1200px) {
+  .lugg-experience-card.booking {
+    grid-template-columns: minmax(260px, .8fr) minmax(0, 1.2fr);
+    gap: 32px;
+    padding-inline: 32px;
+  }
+  .lugg-experience-card.booking .lugg-phone-group { padding-inline: 12px; }
+}
+@media (max-width: 900px) {
+  .lugg-experience-card.booking { grid-template-columns: minmax(0, 1fr); gap: 32px; min-height: 0; }
+  .lugg-experience-card.booking .lugg-experience-copy { max-width: none; }
+  .lugg-experience-card.booking .lugg-phone-group { min-height: 0; }
+}
+
+@media (width < 640px) {
+  .lugg-experience-card.booking .lugg-phone-group { padding-inline: 0; gap: 10px; }
+}
+
+/* Section-level scroll reveals, shared with the Link-Lab reading rhythm. */
+.lugg-reveal-enabled.is-reveal-ready :where(
+  .lugg-hero-copy,
+  .lugg-hero-stage,
+  .lugg-problem .lugg-section-title,
+  .lugg-problem .lugg-body,
+  .lugg-problem-list article,
+  .lugg-goals .lugg-section-title,
+  .lugg-goal-grid article,
+  .lugg-flow-section .lugg-section-title,
+  .lugg-flow,
+  .lugg-experience > .shell > .lugg-section-title,
+  .lugg-experience-card .lugg-experience-copy,
+  .lugg-experience-card .lugg-phone-group,
+  .lugg-experience-card .lugg-pickup-visual,
+  .lugg-iteration-section .lugg-section-title,
+  .lugg-iteration-list > article,
+  .lugg-final .lugg-section-title,
+  .lugg-final-stage,
+  .lugg-final-grid.primary .lugg-device,
+  .lugg-supporting-devices .lugg-supporting-device
+) {
+  opacity: 0;
+  transform: translate3d(0, 36px, 0);
+}
+.lugg-reveal-enabled.is-reveal-ready :where(
+  .lugg-experience-card .lugg-phone-group,
+  .lugg-experience-card .lugg-pickup-visual,
+  .lugg-final-stage,
+  .lugg-final-grid.primary .lugg-device,
+  .lugg-supporting-devices .lugg-supporting-device
+) {
+  transform: translate3d(0, 24px, 0) scale(.95);
+}
+.lugg-hero.is-lugg-visible :is(.lugg-hero-copy, .lugg-hero-stage),
+.lugg-problem.is-lugg-visible :is(.lugg-section-title, .lugg-body, .lugg-problem-list article),
+.lugg-goals.is-lugg-visible :is(.lugg-section-title, .lugg-goal-grid article),
+.lugg-flow-section.is-lugg-visible :is(.lugg-section-title, .lugg-flow),
+.lugg-experience.is-lugg-visible > .shell > .lugg-section-title,
+.lugg-experience-card.is-lugg-visible :is(.lugg-experience-copy, .lugg-phone-group, .lugg-pickup-visual),
+.lugg-iteration-section.is-lugg-visible :is(.lugg-section-title, .lugg-iteration-list > article),
+.lugg-final.is-lugg-visible :is(.lugg-section-title, .lugg-final-stage, .lugg-final-grid.primary .lugg-device, .lugg-supporting-devices .lugg-supporting-device) {
+  opacity: 1;
+  transform: none;
+  animation: lugg-reveal-up 600ms cubic-bezier(.2, .72, .24, 1) backwards;
+}
+.lugg-experience-card.is-lugg-visible :is(.lugg-phone-group, .lugg-pickup-visual),
+.lugg-final.is-lugg-visible .lugg-final-stage,
+.lugg-final.is-lugg-visible :is(.lugg-final-grid.primary .lugg-device, .lugg-supporting-devices .lugg-supporting-device) {
+  animation-name: lugg-reveal-media;
+  animation-duration: 650ms;
+}
+.lugg-hero.is-lugg-visible .lugg-hero-stage { animation-delay: 120ms; }
+.lugg-problem.is-lugg-visible .lugg-body { animation-delay: 120ms; }
+.lugg-problem.is-lugg-visible .lugg-problem-list article:nth-child(1) { animation-delay: 240ms; }
+.lugg-problem.is-lugg-visible .lugg-problem-list article:nth-child(2) { animation-delay: 360ms; }
+.lugg-problem.is-lugg-visible .lugg-problem-list article:nth-child(3) { animation-delay: 480ms; }
+.lugg-goals.is-lugg-visible .lugg-goal-grid article:nth-child(1) { animation-delay: 120ms; }
+.lugg-goals.is-lugg-visible .lugg-goal-grid article:nth-child(2) { animation-delay: 230ms; }
+.lugg-goals.is-lugg-visible .lugg-goal-grid article:nth-child(3) { animation-delay: 340ms; }
+.lugg-goals.is-lugg-visible .lugg-goal-grid article:nth-child(4) { animation-delay: 450ms; }
+.lugg-flow-section.is-lugg-visible .lugg-flow { animation-delay: 140ms; }
+.lugg-experience-card.is-lugg-visible .lugg-phone-group,
+.lugg-experience-card.is-lugg-visible .lugg-pickup-visual { animation-delay: 120ms; }
+.lugg-iteration-section.is-lugg-visible .lugg-iteration-list > article:nth-child(1) { animation-delay: 140ms; }
+.lugg-iteration-section.is-lugg-visible .lugg-iteration-list > article:nth-child(2) { animation-delay: 260ms; }
+.lugg-final.is-lugg-visible .lugg-final-stage { animation-delay: 120ms; }
+.lugg-final.is-lugg-visible .lugg-final-grid.primary .lugg-device:nth-child(1) { animation-delay: 220ms; }
+.lugg-final.is-lugg-visible .lugg-final-grid.primary .lugg-device:nth-child(2) { animation-delay: 330ms; }
+.lugg-final.is-lugg-visible .lugg-final-grid.primary .lugg-device:nth-child(3) { animation-delay: 440ms; }
+.lugg-final.is-lugg-visible .lugg-final-grid.primary .lugg-device:nth-child(4) { animation-delay: 550ms; }
+.lugg-final.is-lugg-visible .lugg-supporting-devices .lugg-supporting-device:nth-child(1) { animation-delay: 660ms; }
+.lugg-final.is-lugg-visible .lugg-supporting-devices .lugg-supporting-device:nth-child(2) { animation-delay: 770ms; }
+@keyframes lugg-reveal-up {
+  from { opacity: 0; transform: translate3d(0, 36px, 0); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes lugg-reveal-media {
+  from { opacity: 0; transform: translate3d(0, 24px, 0) scale(.95); }
+  to { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lugg-reveal-enabled :where(
+    .lugg-hero-copy,
+    .lugg-hero-stage,
+    .lugg-section-title,
+    .lugg-body,
+    .lugg-problem-list article,
+    .lugg-goal-grid article,
+    .lugg-flow,
+    .lugg-experience-copy,
+    .lugg-phone-group,
+    .lugg-pickup-visual,
+    .lugg-iteration-list > article,
+    .lugg-final-stage,
+    .lugg-final-grid.primary .lugg-device,
+    .lugg-supporting-devices .lugg-supporting-device
+  ) { opacity: 1; transform: none; animation: none; }
+}
+
+/* Full responsive pass: service flow, refinements, and primary screens. */
+.lugg-flow-step,
+.lugg-refinement-copy,
+.lugg-compare,
+.lugg-compare-stage,
+.lugg-final-grid.primary { min-width: 0; }
+.lugg-iteration-list > article .lugg-refinement-copy { width: 100%; }
+.lugg-final-grid.primary {
+  display: grid;
+  grid-template-columns: repeat(4, max-content);
+  justify-content: center;
+  align-items: end;
+}
+@media (900px <= width < 1200px) {
+  .lugg-flow { padding-inline: 12px; }
+  .lugg-flow-step strong { min-width: 0; }
+  .lugg-refinement-landing .lugg-refinement-copy { width: 100%; }
+  .lugg-refinement-landing .lugg-refinement-copy ul { flex-wrap: wrap; white-space: normal; }
+}
+@media (max-width: 1199px) {
+  .lugg-flow-section .lugg-section-title h2,
+  .lugg-experience-card.tracking .lugg-user-problem,
+  .lugg-experience-card.pickup .lugg-user-problem { white-space: normal; }
+}
+@media (max-width: 900px) {
+  .lugg-flow-section .lugg-section-title h2,
+  .lugg-experience-card.tracking .lugg-user-problem,
+  .lugg-experience-card.pickup .lugg-user-problem,
+  .lugg-status-chips { white-space: normal; }
+  .lugg-status-chips { flex-wrap: wrap; }
+  .lugg-flow {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+    padding: 20px;
+  }
+  .lugg-flow-step {
+    min-height: 0;
+    flex-direction: row;
+    justify-content: flex-start;
+    text-align: left;
+  }
+  .lugg-flow-arrow {
+    top: calc(100% + 1px);
+    right: auto;
+    left: 12px;
+    transform: rotate(90deg);
+  }
+  .lugg-iteration-list > article,
+  .lugg-iteration-list > article.lugg-refinement-landing,
+  .lugg-iteration-list > article.lugg-refinement-booking {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+    padding-inline: 0;
+  }
+  .lugg-refinement-copy ul { grid-column: auto; }
+  .lugg-compare {
+    grid-template-columns: minmax(0, 1fr) 20px minmax(0, 1fr);
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+  }
+  .lugg-compare-stage .lugg-device { width: min(100%, 150px); max-width: 150px; }
+  .lugg-final-grid.primary {
+    grid-template-columns: repeat(2, max-content);
+    gap: 22px;
+    width: 100%;
+    overflow: visible;
+  }
+}
+@media (width < 640px) {
+  .lugg-flow { gap: 14px; padding: 18px 16px; }
+  .lugg-compare { grid-template-columns: minmax(0, 1fr) 16px minmax(0, 1fr); gap: 8px; }
+  .lugg-compare-stage .lugg-device { width: min(100%, 135px); max-width: 135px; }
+  .lugg-final-grid.primary { gap: 16px; }
+  .lugg-final-grid.primary .lugg-device,
+  .lugg-final-grid.primary .final-reservation { width: min(36vw, 130px); max-width: 130px; }
+}
+
+@media (hover:hover) and (pointer:fine) {
+  .lugg-case .lugg-experience-list > .lugg-experience-card {
+    transition: transform 220ms ease-out, box-shadow 220ms ease-out, border-color 220ms ease-out;
+  }
+  .lugg-case .lugg-experience-list > .lugg-experience-card:hover {
+    transform: translateY(-4px);
+    border-color: #e3cba7;
+    box-shadow: 0 10px 24px rgba(96, 70, 34, .09);
+  }
+}

@@ -961,22 +961,16 @@ body { background:var(--warm); color:#171717; }
 .work-step .step-visual img{object-fit:cover;object-position:center}
 
 /* Homepage review: exact Link-Lab screen dimensions. */
-@media(min-width:901px){.linklab-phone,.linklab-phone-side,.linklab-phone-side:last-child{width:114px}.linklab-phone-main{width:144px}.linklab-phone-side img{width:102px!important;height:222px!important}.linklab-phone-main img{width:132px!important;height:288px!important}}
 
 /* Explicit rendered dimensions for the annotated Link-Lab screens. */
-@media(min-width:901px){.work-linklab .linklab-phone.linklab-phone-side{width:114px!important;height:234px!important;flex:0 0 114px}.work-linklab .linklab-phone.linklab-phone-main{width:144px!important;height:300px!important;flex:0 0 144px}.work-linklab .linklab-phone-side .linklab-phone-screen{width:102px!important;height:222px!important}.work-linklab .linklab-phone-main .linklab-phone-screen{width:132px!important;height:288px!important}.work-linklab .linklab-phone-side img{width:102px!important;height:222px!important}.work-linklab .linklab-phone-main img{width:132px!important;height:288px!important}}
 
 /* Homepage review: widen the portrait area by 30px. */
-@media(min-width:901px){.identity-photo{max-width:450px}}
 
 /* Homepage review: apply the portrait width directly instead of only changing its cap. */
-@media(min-width:901px){.home-identity{grid-template-columns:minmax(0,1.05fr) minmax(450px,.95fr)}.identity-photo{width:450px!important;max-width:450px!important}}
 
 /* Homepage Hero: portfolio-led desktop proportion. */
-@media(min-width:901px){.home-identity{width:min(1200px,calc(100% - 64px));grid-template-columns:minmax(0,58fr) minmax(0,42fr);gap:64px}.identity-photo{width:420px!important;max-width:420px!important;height:auto!important;justify-self:center;align-self:center}.identity-photo img{width:100%;height:auto!important;object-fit:contain}}
 
 /* Homepage Hero: text remains primary at every desktop width. */
-@media(min-width:901px){.home-identity{grid-template-columns:minmax(0,56fr) minmax(0,44fr);gap:56px}.identity-photo{width:100%!important;max-width:400px!important;height:auto!important;justify-self:center;align-self:center}.identity-photo img{width:100%;height:auto!important;object-fit:contain}}
 
 /* Homepage review: enlarge the Link-Lab focal screen and fill the Step visual area. */
 @media(min-width:901px){.linklab-phone-main{width:150px}.linklab-visual{gap:14px}}

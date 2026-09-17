@@ -1,9 +1,11 @@
 'use client';
 
+/* oxlint-disable jsx-a11y/no-noninteractive-element-interactions -- The native details disclosure and its absolutely positioned menu form one hover boundary. */
+
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ArrowUpRight, Menu } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { type MouseEvent, useEffect, useRef, useState } from 'react';
 
 const links = [
   { href: '/', label: '关于我', section: 'about' },
@@ -19,6 +21,59 @@ function NavLabel({ label, active = false, arrow = false }: { label: string; act
 export function SiteHeader() {
   const pathname = usePathname();
   const [activeSection, setActiveSection] = useState('');
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const mobileNavRef = useRef<HTMLDetailsElement>(null);
+  const hoverCloseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const clearHoverClose = () => {
+    if (hoverCloseTimer.current) {
+      clearTimeout(hoverCloseTimer.current);
+      hoverCloseTimer.current = null;
+    }
+  };
+
+  const supportsHover = () => window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+  const closeMobileNav = () => {
+    clearHoverClose();
+    setMobileOpen(false);
+  };
+
+  const scrollCurrentPageToTop = (event: MouseEvent<HTMLAnchorElement>, href: string) => {
+    const currentPath = window.location.pathname.replace(/\/+$/, '') || '/';
+    const targetPath = new URL(href, window.location.origin).pathname.replace(/\/+$/, '') || '/';
+
+    if (currentPath !== targetPath) return;
+    event.preventDefault();
+    const resetScroll = () => {
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+    };
+
+    resetScroll();
+    window.requestAnimationFrame(resetScroll);
+    window.setTimeout(resetScroll, 100);
+  };
+
+  useEffect(() => {
+    const handlePointerDown = (event: PointerEvent) => {
+      if (mobileOpen && !mobileNavRef.current?.contains(event.target as Node)) closeMobileNav();
+    };
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== 'Escape' || !mobileOpen) return;
+      closeMobileNav();
+      mobileNavRef.current?.querySelector('summary')?.focus();
+    };
+
+    document.addEventListener('pointerdown', handlePointerDown);
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('pointerdown', handlePointerDown);
+      document.removeEventListener('keydown', handleKeyDown);
+      clearHoverClose();
+    };
+  }, [mobileOpen]);
 
   useEffect(() => {
     if (pathname !== '/') return;
@@ -31,8 +86,8 @@ export function SiteHeader() {
 
   return <header className="site-header"><div className="shell nav-wrap">
     <Link href="/" className="brand" aria-label="章怡作品集首页"><span>章怡</span><small>Zhang Yi</small></Link>
-    <nav className="desktop-nav" aria-label="主导航">{links.map((link) => <Link key={link.href} href={link.href} scroll={false} className="nav-item"><NavLabel label={link.label} active={(link.section === activeSection && pathname === '/') || link.route === pathname} /></Link>)}<Link href="/#contact" scroll={false} className="nav-item nav-contact"><NavLabel label="联系我" arrow /></Link></nav>
-    <details className="mobile-nav"><summary aria-label="打开导航菜单"><Menu size={19} /></summary><nav>{links.map((link) => <Link key={link.href} href={link.href} scroll={false}>{link.label}</Link>)}<Link href="/#contact" scroll={false}>联系我 <ArrowUpRight size={14} /></Link></nav></details>
+    <nav className="desktop-nav" aria-label="主导航">{links.map((link) => <Link key={link.href} href={link.href} scroll={false} className="nav-item" onClickCapture={(event) => scrollCurrentPageToTop(event, link.href)}><NavLabel label={link.label} active={(link.section === activeSection && pathname === '/') || link.route === pathname} /></Link>)}<Link href="/#contact" className="nav-item nav-contact"><NavLabel label="联系我" arrow /></Link></nav>
+    <details ref={mobileNavRef} className="mobile-nav" open={mobileOpen} onToggle={(event) => setMobileOpen(event.currentTarget.open)} onMouseEnter={() => { clearHoverClose(); if (supportsHover()) setMobileOpen(true); }} onMouseLeave={() => { if (!supportsHover()) return; clearHoverClose(); hoverCloseTimer.current = setTimeout(() => setMobileOpen(false), 180); }}><summary aria-label={mobileOpen ? '关闭导航菜单' : '打开导航菜单'} aria-expanded={mobileOpen}><Menu size={19} /></summary><nav>{links.map((link) => <Link key={link.href} href={link.href} scroll={false} onClickCapture={(event) => scrollCurrentPageToTop(event, link.href)} onClick={closeMobileNav}>{link.label}</Link>)}<Link href="/#contact" onClick={closeMobileNav}>联系我 <ArrowUpRight size={14} /></Link></nav></details>
   </div></header>;
 }
 

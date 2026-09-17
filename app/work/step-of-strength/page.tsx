@@ -1,13 +1,15 @@
 import { SiteFooter, SiteHeader } from '@/components/site-shell';
-import { ManagedVideo } from '@/components/managed-video';
+import { SosVideoPlayer } from '@/components/sos-video-player';
+import { ThreeModesCarousel } from '@/components/three-modes-carousel';
+import { SosReveal } from './sos-reveal';
 import './step-of-strength.css';
 
 const asset = '/assets/step-of-strength/';
 
 const modes = [
-  { number: '01', title: '被动·Passive', subtitle: '先感受到空间中的压力', src: 'mode-passive-v2.mp4', text: '冷色环境、低沉节奏与负面文字先建立一种压抑的空间状态，让参与者先看到舞者可能面对的评价和压力。' },
-  { number: '02', title: '单人·Individual', subtitle: '一个动作开始改变环境', src: 'mode-individual-v2.mp4', text: '当参与者踩到负面文字时，文字碎裂并消失，灯光与声音逐渐转暖，负面内容被支持性的词语替代。' },
-  { number: '03', title: '多人·collective', subtitle: '个体行为累积成集体变化', src: 'mode-collective-v2.mp4', text: '随着更多人加入，声音层次、暖色反馈和正向内容持续增加，整个空间由冷和疏离逐渐转向支持与共同参与。' },
+  { number: '01', title: '被动·Passive', subtitle: '通过空间感受舞者面临的负面压力', src: 'mode-passive-v2.mp4' },
+  { number: '02', title: '单人·Individual', subtitle: '一个动作开始改变环境', src: 'mode-individual-v2.mp4' },
+  { number: '03', title: '多人·collective', subtitle: '个体行为累积成集体变化', src: 'mode-collective-v2.mp4' },
 ];
 
 const principles = [
@@ -17,12 +19,12 @@ const principles = [
 ];
 
 export default function StepOfStrengthPage() {
-  return <><SiteHeader /><main className="sos-case">
-    <section className="sos-hero"><div className="shell sos-hero-grid"><div className="sos-hero-copy"><p className="sos-eyebrow">INTERACTIVE PROJECTION EXPERIENCE</p><h1>Step of Strength</h1><p className="sos-kicker">—— 基于步行参与的互动投影体验·装置展示</p><figure className="sos-hero-media"><img src={`${asset}hero-dancers-alley.png`} alt="Dancers Alley 场地与舞者" /></figure><p>Step of Strength 将 悉尼ICC两座剧院之间的室内连桥转化为一段可参与的互动空间，让经过的人通过踩踏地面投影，把负面文字逐步转化为支持性的内容，在行走中建立对舞者处境的理解。</p><p>Step of Strength 将 悉尼ICC两座剧院之间的室内连桥转化为一段可参与的互动空间，让经过的人通过踩踏地面投影，把负面文字逐步转化为支持性的内容，在行走中建立对舞者处境的理解。</p><ul className="sos-skill-tags"><li>互动体验</li><li>视觉叙事</li><li>影像制作</li><li>3D & AI</li></ul></div></div></section>
+  return <><SiteHeader /><main className="sos-case"><SosReveal />
+    <section className="sos-hero" data-sos-reveal><div className="shell sos-hero-grid"><div className="sos-hero-copy"><p className="sos-eyebrow">INTERACTIVE PROJECTION EXPERIENCE</p><h1>Step of Strength</h1><p className="sos-kicker">—— 基于步行参与的互动投影体验·装置展示</p><figure className="sos-hero-media"><img src={`${asset}hero-dancers-alley.png`} alt="Dancers Alley 场地与舞者" /></figure><p>Step of Strength 将 悉尼ICC两座剧院之间的室内连桥转化为一段可参与的互动空间，让经过的人通过踩踏地面投影，把负面文字逐步转化为支持性的内容，在行走中建立对舞者处境的理解。</p><p>Step of Strength 将 悉尼ICC两座剧院之间的室内连桥转化为一段可参与的互动空间，让经过的人通过踩踏地面投影，把负面文字逐步转化为支持性的内容，在行走中建立对舞者处境的理解。</p><ul className="sos-skill-tags"><li>互动体验</li><li>视觉叙事</li><li>影像制作</li><li>3D & AI</li></ul></div></div></section>
 
-    <section className="sos-section sos-final-film"><div className="shell"><header className="sos-heading"><p>最终作品 · <span>FINAL FILM</span></p><h2>用影像完整呈现互动体验</h2><div>通过地面投影、声音与灯光反馈，将普通的步行动作转化为从“看到负面内容”到“主动介入并改变环境”的参与过程。</div></header><div className="sos-film"><ManagedVideo src={`${asset}final-film.mp4`} label="Step of Strength final film" muted={false} /></div></div></section>
+    <section className="sos-section sos-final-film"><div className="shell"><header className="sos-heading"><p>最终作品 · <span>FINAL FILM</span></p><h2>用影像完整呈现互动体验</h2><div>通过地面投影、声音与灯光反馈，将普通的步行动作转化为从“看到负面内容”到“主动介入并改变环境”的参与过程。</div></header><SosVideoPlayer src={`${asset}final-film.mp4`} label="Step of Strength final film" className="sos-film" controlPosition="left" preloadAfterPageLoad /></div></section>
 
-    <section className="sos-section sos-modes"><div className="shell"><header className="sos-heading"><p>体验状态 · <span>THREE MODES</span></p><h2>从被动感知到群体参与</h2></header><div className="sos-mode-grid">{modes.map((mode) => <article key={mode.title} className="sos-mode"><div className="sos-mode-video"><ManagedVideo src={`${asset}${mode.src}`} label={`${mode.title} mode video`} muted={false} /></div><div className="sos-mode-copy"><h3>{mode.title}</h3><strong>{mode.subtitle}</strong><p>{mode.text}</p></div></article>)}</div></div></section>
+    <section className="sos-section sos-modes"><div className="shell"><header className="sos-heading"><p>体验状态 · <span>THREE MODES</span></p><h2>从被动感知到群体参与</h2></header><ThreeModesCarousel modes={modes} asset={asset} /></div></section>
 
     <section className="sos-section sos-logic"><div className="shell"><header className="sos-heading"><p>体验机制 · <span>EXPERIENCE LOGIC</span></p><h2>让“经过”本身成为一种回应</h2><div>前期观察显示，舞者与普通行人并不是完全分离的两类人，他们持续共享同一条公共动线。问题更多来自彼此缺少理解，以及舞者在公开练习时容易受到围观、干扰和评价。</div><div>研究因此将重点从“保护一个独立的舞蹈区域”转向：如何让经过这里的人以低门槛的方式理解并回应舞者的处境。</div></header><div className="sos-principles">{principles.map(([number, title, text]) => <article key={number}><span>{number}</span><h3>{title}</h3><p>{text}</p></article>)}</div></div></section>
 

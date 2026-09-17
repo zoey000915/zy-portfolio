@@ -148,3 +148,265 @@
   .footer-grid h2 { font-size:21px; white-space:normal; }
   .footer-meta { margin-top:25px; padding-top:11px; }
 }
+
+/* Responsive layout: only the homepage identity and first project card. */
+.home-identity {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 400px);
+  gap: 56px;
+}
+.home-identity .identity-copy { min-width: 0; }
+.home-identity .identity-copy h1 { white-space: normal; }
+.home-identity .identity-lead { width: 100%; }
+.home-identity .identity-lead span { white-space: normal; }
+.home-identity .identity-photo {
+  position: static;
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  margin: 0;
+  transform: none;
+}
+.home-identity .identity-photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+.work-linklab {
+  grid-template-columns: minmax(0, 42fr) minmax(0, 58fr);
+  overflow: hidden;
+}
+.work-linklab .work-card-copy { min-width: 0; }
+.work-linklab .linklab-visual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  gap: 16px;
+  padding: 40px;
+  overflow: hidden;
+}
+.work-linklab .linklab-phone.linklab-phone-side {
+  flex: 1 1 114px;
+  width: 100%;
+  max-width: 114px;
+  min-width: 0;
+  height: auto;
+  transform: none;
+}
+.work-linklab .linklab-phone.linklab-phone-main {
+  flex: 1 1 144px;
+  width: 100%;
+  max-width: 144px;
+  min-width: 0;
+  height: auto;
+  transform: none;
+}
+.work-linklab .linklab-phone .linklab-phone-screen {
+  width: 100%;
+  height: auto;
+}
+.work-linklab .linklab-phone img {
+  width: 100% !important;
+  height: auto !important;
+  object-fit: contain;
+}
+@media (840px <= width < 1200px) {
+  .home-identity {
+    width: calc(100% - 64px);
+    grid-template-columns: minmax(0, 1fr) minmax(270px, clamp(270px, 30vw, 340px));
+    gap: clamp(34px, 4vw, 48px);
+  }
+  .home-identity .identity-photo { max-width: clamp(270px, 30vw, 340px); }
+}
+@media (900px <= width < 1200px) {
+  .work-linklab .linklab-visual { padding: 32px 24px; gap: 12px; }
+}
+@media (width < 840px) {
+  .home-identity { grid-template-columns: minmax(0, 1fr); gap: 40px; }
+  .home-identity .identity-photo { justify-self: start; }
+}
+@media (width < 900px) {
+  .work-linklab { grid-template-columns: minmax(0, 1fr); }
+  .work-linklab .linklab-visual { min-height: 0; padding: 32px 24px; }
+}
+@media (width < 640px) {
+  .home-identity { gap: 32px; }
+  .work-linklab .linklab-visual { gap: 9px; padding: 28px 14px; }
+}
+
+/* Approved background-only overflow fix: paint the bleed without widening layout. */
+#work::before, .skill-block::before {
+  width: 100%;
+  clip-path: inset(0 -100vmax);
+}
+#work::before { box-shadow: 0 0 0 100vmax #fff; }
+.skill-block::before { box-shadow: 0 0 0 100vmax #f7f6f2; }
+
+/* Shared mobile navigation: keep the desktop nav out of the mobile layout and
+   make the native details menu's open state explicit. */
+@media (max-width: 640px) {
+  .nav-wrap > .desktop-nav { display: none; }
+  .nav-wrap > .mobile-nav { display: block; z-index: 60; }
+  .mobile-nav:not([open]) > nav { display: none; }
+  .mobile-nav[open] > nav {
+    top: calc(100% + 14px);
+    right: 0;
+    z-index: 61;
+    display: grid;
+    width: min(240px, calc(100vw - 32px));
+    min-width: 0;
+    gap: 0;
+  }
+  .mobile-nav[open] > nav > a { display: flex; align-items: center; justify-content: space-between; }
+  .work-linklab .linklab-phone {
+    padding: 3px;
+    border-width: 1px;
+    border-radius: clamp(16px, 5vw, 21px);
+  }
+  .work-linklab .linklab-phone-screen,
+  .work-linklab .linklab-phone img { border-radius: clamp(13px, 4vw, 18px) !important; }
+}
+
+/* About section reading rhythm, aligned with the case-study reveals. */
+.home-reveal-enabled.is-home-reveal-ready :where(
+  .home-identity .identity-copy,
+  .home-identity .identity-photo,
+  .about-section .home-section-heading,
+  .about-profile,
+  .education-block > header,
+  .education-list,
+  .skill-block > header,
+  .skill-cards > article,
+  .works-section .home-section-heading,
+  .works-grid > .work-card
+) {
+  opacity: 0;
+  transform: translate3d(0, 36px, 0);
+}
+.home-reveal-enabled.is-home-reveal-ready :where(.home-identity .identity-copy) { transform: translate3d(-36px, 0, 0); }
+.home-reveal-enabled.is-home-reveal-ready :where(.home-identity .identity-photo) { transform: translate3d(36px, 0, 0); }
+.home-identity.is-home-visible :is(.identity-copy, .identity-photo),
+.about-section.is-home-visible :is(.home-section-heading, .about-profile),
+.education-block.is-home-visible > header,
+.education-block.is-home-visible .education-list,
+.skill-block.is-home-visible > header,
+.skill-block.is-home-visible .skill-cards > article,
+.works-section.is-home-visible :is(.home-section-heading, .works-grid > .work-card) {
+  opacity: 1;
+  transform: none;
+  animation: home-reveal-up 680ms cubic-bezier(.16, .76, .24, 1) backwards;
+}
+.home-identity.is-home-visible .identity-copy { animation: home-reveal-from-left 780ms cubic-bezier(.16, .76, .24, 1) backwards; }
+.home-identity.is-home-visible .identity-photo { animation: home-reveal-from-right 780ms cubic-bezier(.16, .76, .24, 1) 140ms backwards; }
+.about-section.is-home-visible .about-profile { animation-delay: 130ms; }
+.education-block.is-home-visible > header { animation-delay: 40ms; }
+.education-block.is-home-visible .education-list { animation-delay: 170ms; }
+.skill-block.is-home-visible > header { animation-delay: 80ms; }
+.skill-block.is-home-visible .skill-cards > article:nth-child(1) { animation-delay: 180ms; }
+.skill-block.is-home-visible .skill-cards > article:nth-child(2) { animation-delay: 290ms; }
+.skill-block.is-home-visible .skill-cards > article:nth-child(3) { animation-delay: 400ms; }
+.works-section.is-home-visible .works-grid > .work-card:nth-child(1) { animation-delay: 140ms; }
+.works-section.is-home-visible .works-grid > .work-card:nth-child(2) { animation-delay: 260ms; }
+.works-section.is-home-visible .works-grid > .work-card:nth-child(3) { animation-delay: 380ms; }
+@keyframes home-reveal-up {
+  from { opacity: 0; transform: translate3d(0, 36px, 0); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes home-reveal-from-left {
+  from { opacity: 0; transform: translate3d(-36px, 0, 0); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes home-reveal-from-right {
+  from { opacity: 0; transform: translate3d(36px, 0, 0); }
+  to { opacity: 1; transform: none; }
+}
+@media (hover: hover) and (pointer: fine) {
+  .skill-cards > article {
+    transition: transform 220ms ease-out, box-shadow 220ms ease-out, border-color 220ms ease-out;
+  }
+  .skill-cards > article:hover {
+    transform: translateY(-4px);
+    border-color: #d5d2c8;
+    box-shadow: 0 10px 24px rgba(54, 50, 42, .08);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .home-reveal-enabled :where(
+    .home-identity .identity-copy,
+    .home-identity .identity-photo,
+    .about-section .home-section-heading,
+    .about-profile,
+    .education-block > header,
+    .education-list,
+    .skill-block > header,
+    .skill-cards > article,
+    .works-section .home-section-heading,
+    .works-grid > .work-card
+  ) { opacity: 1; transform: none; animation: none; }
+}
+
+@media (max-width: 640px) and (hover: hover) and (pointer: fine) {
+  .mobile-nav[open]::after {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: min(240px, calc(100vw - 32px));
+    height: 14px;
+    content: '';
+  }
+}
+
+/* Match the exposed area around the floating header to each page intro. */
+body:has(.link-case) { background: #fbfdff; }
+body:has(.lugg-case) { background: #fff; }
+body:has(.sos-case) { background: #d9e3ec; }
+
+/* Global floating navigation capsule. */
+html body .site-header.site-header {
+  position: sticky;
+  top: 16px;
+  z-index: 50;
+  width: min(1320px, calc(100% - 48px));
+  height: 40px;
+  margin: 16px auto 0;
+  border: 1px solid rgba(255, 255, 255, .8);
+  border-radius: 999px;
+  background: rgba(245, 249, 255, .58);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .82), 0 6px 24px rgba(38, 52, 70, .07);
+  -webkit-backdrop-filter: blur(18px) saturate(90%) brightness(1.06);
+  backdrop-filter: blur(18px) saturate(90%) brightness(1.06);
+}
+html body .site-header.site-header .nav-wrap.nav-wrap {
+  box-sizing: border-box;
+  width: 100%;
+  height: 40px;
+  min-height: 40px;
+  margin: 0;
+  padding: 0 16px;
+}
+.site-header .brand { flex: 0 0 auto; }
+.site-header .desktop-nav { margin-left: auto; }
+.site-header .nav-item { transition: opacity 180ms ease-out; }
+.site-header .nav-item:hover { opacity: .66; }
+.site-header .nav-item:hover .nav-label .nav-default,
+.site-header .nav-label.is-active .nav-default { transform: none; }
+.site-header .nav-label .nav-hover { display: none; }
+
+@media (max-width: 640px) {
+  html body .site-header.site-header {
+    top: 12px;
+    width: calc(100% - 24px);
+    margin-top: 12px;
+  }
+  html body .site-header.site-header .nav-wrap.nav-wrap { padding-inline: 14px; }
+  .site-header .mobile-nav summary {
+    width: 28px;
+    height: 28px;
+    align-items: center;
+    justify-content: center;
+  }
+}

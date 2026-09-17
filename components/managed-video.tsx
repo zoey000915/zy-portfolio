@@ -7,10 +7,19 @@ type ManagedVideoProps = {
   label: string;
   className?: string;
   muted?: boolean;
+  controls?: boolean;
+  preload?: 'none' | 'metadata' | 'auto';
 };
 
-export function ManagedVideo({ src, label, className = '', muted = true }: ManagedVideoProps) {
+export function ManagedVideo({ src, label, className = '', muted = true, controls = true, preload = 'metadata' }: ManagedVideoProps) {
   const ref = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const video = ref.current;
+    if (!video || video.preload === preload) return;
+    video.preload = preload;
+    if (preload !== 'none' && video.paused) video.load();
+  }, [preload]);
 
   useEffect(() => {
     const video = ref.current;
@@ -22,7 +31,7 @@ export function ManagedVideo({ src, label, className = '', muted = true }: Manag
     return () => observer.disconnect();
   }, []);
 
-  return <video ref={ref} className={className} controls muted={muted} playsInline preload="metadata" aria-label={label}>
+  return <video ref={ref} className={className} controls={controls} muted={muted} playsInline preload={preload} aria-label={label}>
     <source src={src} type="video/mp4" />
     抱歉，浏览器不支持该视频播放。
   </video>;

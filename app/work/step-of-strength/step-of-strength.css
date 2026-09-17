@@ -4,4 +4,328 @@
 .sos-modes{padding:80px 0}.sos-mode-grid{max-width:1050px;margin:16px auto 0}.sos-mode-copy{padding-top:12px}.sos-mode-copy h3{margin-bottom:5px}.sos-mode-copy p{margin-top:8px;line-height:1.7}
 
 .sos-hero-copy{position:relative}.sos-kicker{position:absolute;top:62px;right:0;left:auto}.sos-hero-copy>p:not(.sos-eyebrow):not(.sos-kicker){margin-bottom:8px}.sos-final-film .sos-heading h2{margin-bottom:8px}.sos-final-film .sos-heading>div{margin-top:0}.sos-production-flow{margin-top:24px}.sos-timeline{margin-top:28px}.sos-modes{padding:80px 0 120px}
+@media(min-width:761px){.sos-hero-copy{transform:translateY(-20px)}}
 @media(max-width:760px){.sos-kicker{position:static;margin-top:0}.sos-hero-copy>p:not(.sos-eyebrow):not(.sos-kicker){margin-bottom:8px}.sos-production-flow{margin-top:24px}.sos-timeline{margin-top:28px}.sos-modes{padding:74px 0 114px}}
+
+/* Three Modes: finite, scroll-driven 3D carousel on wide screens. */
+.sos-mode-carousel {
+  position: relative;
+  margin-top: 22px;
+  outline: none;
+}
+.sos-mode-ring {
+  position: relative;
+  height: clamp(680px, 58vw, 760px);
+  overflow: hidden;
+  perspective: 1200px;
+  transform-style: preserve-3d;
+}
+.sos-mode-ring .sos-mode {
+  position: absolute;
+  top: calc(50% - 35px);
+  left: 50%;
+  z-index: 1;
+  width: clamp(310px, min(30vw, 42vh), 360px);
+  max-width: none;
+  margin: 0;
+  padding: 14px;
+  border: 1px solid rgba(203, 218, 230, .28);
+  border-radius: 20px;
+  background: rgba(16, 24, 32, .91);
+  box-shadow: inset 0 1px 0 rgba(235, 244, 252, .09), 0 20px 42px rgba(0, 0, 0, .26);
+  -webkit-backdrop-filter: blur(12px) saturate(92%);
+  backdrop-filter: blur(12px) saturate(92%);
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  transition: transform 600ms cubic-bezier(.22, .74, .2, 1), opacity 600ms ease-out, filter 600ms ease-out, box-shadow 600ms ease-out;
+  will-change: transform, opacity;
+}
+.sos-mode-ring .sos-mode.is-active {
+  z-index: 3;
+  opacity: 1;
+  pointer-events: auto;
+  filter: none;
+  border-color: rgba(215, 228, 238, .38);
+  box-shadow: inset 0 1px 0 rgba(235, 244, 252, .12), 0 24px 48px rgba(0, 0, 0, .3);
+  transform: translate3d(-50%, -50%, 110px) rotateY(0deg) scale(1);
+}
+.sos-mode-ring .sos-mode.is-active > * { position: relative; z-index: 1; }
+.sos-mode-ring .sos-mode.is-prev {
+  opacity: .52;
+  pointer-events: none;
+  filter: saturate(.72) brightness(.78);
+  transform: translate3d(calc(-50% - clamp(230px, 26vw, 360px)), -50%, -120px) rotateY(18deg) scale(.78);
+}
+.sos-mode-ring .sos-mode.is-next {
+  opacity: .52;
+  pointer-events: none;
+  filter: saturate(.72) brightness(.78);
+  transform: translate3d(calc(-50% + clamp(230px, 26vw, 360px)), -50%, -120px) rotateY(-18deg) scale(.78);
+}
+.sos-mode-ring .sos-mode > header {
+  margin-bottom: 10px;
+  color: #c9bba9;
+}
+.sos-mode-ring .sos-mode-video {
+  position: relative;
+  overflow: hidden;
+  border-radius: 14px;
+  cursor: pointer;
+  isolation: isolate;
+  transform: translateZ(0);
+}
+.sos-mode-ring .sos-mode-video video {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 2 / 3;
+  object-fit: contain;
+  border-radius: inherit;
+}
+.sos-video-player { position: relative; }
+.sos-video-toggle {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #f4f7fb;
+  cursor: pointer;
+}
+.sos-video-toggle-icon {
+  position: absolute;
+  bottom: 22px;
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border: 1px solid rgba(222, 235, 249, .68);
+  border-radius: 50%;
+  background: rgba(7, 14, 21, .56);
+  font-size: 16px;
+  line-height: 1;
+  transition: background 180ms ease, transform 180ms ease;
+}
+.sos-video-toggle.is-center .sos-video-toggle-icon { left: 50%; transform: translateX(-50%); }
+.sos-video-toggle.is-left .sos-video-toggle-icon { left: 22px; }
+.sos-video-player.is-playing .sos-video-toggle-icon { opacity: 0; }
+.sos-video-toggle:hover .sos-video-toggle-icon { background: rgba(29, 79, 130, .72); }
+.sos-video-toggle.is-center:hover .sos-video-toggle-icon { transform: translateX(-50%) scale(1.06); }
+.sos-video-toggle.is-left:hover .sos-video-toggle-icon { transform: scale(1.06); }
+.sos-carousel-controls {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: -2px;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+}
+.sos-carousel-controls button {
+  display: grid;
+  width: 34px;
+  height: 24px;
+  padding: 0;
+  place-items: center;
+  color: #85929c;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+.sos-carousel-controls button::after {
+  width: 22px;
+  height: 2px;
+  border-radius: 999px;
+  background: currentColor;
+  content: '';
+  transition: width 220ms ease, color 220ms ease;
+}
+.sos-carousel-controls button span {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+.sos-carousel-controls button.is-active {
+  color: #d1c3b2;
+}
+.sos-carousel-controls button.is-active::after { width: 34px; }
+.sos-carousel-status {
+  margin: 10px 0 0;
+  color: #93a0aa !important;
+  font-size: 11px !important;
+  letter-spacing: .1em;
+  text-align: center;
+}
+@media (width < 1200px) {
+  .sos-final-film .sos-heading > div,
+  .sos-logic .sos-heading > div:nth-of-type(2),
+  .sos-principles article:nth-child(3) p { white-space: normal; }
+}
+@media (max-width: 760px) {
+  .sos-kicker { position: static; margin-top: 0; }
+  .sos-mode-carousel { width: 100%; margin-top: 36px; }
+  .sos-mode-ring {
+    display: grid;
+    height: auto;
+    gap: 42px;
+    overflow: visible;
+    perspective: none;
+  }
+  .sos-mode-ring .sos-mode,
+  .sos-mode-ring .sos-mode.is-active,
+  .sos-mode-ring .sos-mode.is-prev,
+  .sos-mode-ring .sos-mode.is-next {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: min(100%, 360px);
+    max-width: 100%;
+    margin-inline: auto;
+    padding: 13px;
+    opacity: 1;
+    pointer-events: auto;
+    filter: none;
+    transform: none;
+  }
+  .sos-mode-ring .sos-mode { transition: none; }
+  .sos-carousel-controls,
+  .sos-carousel-status { display: none; }
+}
+@media (width < 900px) {
+  .sos-mode-ring { gap: 38px; }
+  .sos-mode-ring .sos-mode,
+  .sos-mode-ring .sos-mode.is-active,
+  .sos-mode-ring .sos-mode.is-prev,
+  .sos-mode-ring .sos-mode.is-next { width: min(100%, 340px); }
+}
+@media (width < 640px) {
+  .sos-mode-carousel { margin-top: 30px; }
+  .sos-mode-ring { gap: 32px; }
+  .sos-mode-ring .sos-mode,
+  .sos-mode-ring .sos-mode.is-active,
+  .sos-mode-ring .sos-mode.is-prev,
+  .sos-mode-ring .sos-mode.is-next {
+    width: min(100%, 300px);
+    padding: 11px;
+  }
+  .sos-mode-copy h3 { font-size: 23px; }
+}
+@media (prefers-reduced-motion: reduce) and (min-width: 761px) {
+  .sos-mode-ring .sos-mode {
+    transition: transform 180ms ease-out, opacity 180ms ease-out;
+  }
+  .sos-mode-ring .sos-mode.is-prev {
+    filter: none;
+    transform: translate3d(calc(-50% - clamp(210px, 24vw, 330px)), -50%, 0) scale(.82);
+  }
+  .sos-mode-ring .sos-mode.is-next {
+    filter: none;
+    transform: translate3d(calc(-50% + clamp(210px, 24vw, 330px)), -50%, 0) scale(.82);
+  }
+}
+
+/* Section-level reveal motion; Three Modes card transforms stay untouched. */
+.sos-reveal-enabled.is-sos-reveal-ready :where(
+  .sos-hero .sos-eyebrow, .sos-hero h1, .sos-hero .sos-kicker,
+  .sos-hero .sos-hero-media,
+  .sos-hero-copy > p:not(.sos-eyebrow):not(.sos-kicker),
+  .sos-hero .sos-skill-tags,
+  .sos-final-film .sos-heading, .sos-final-film .sos-film,
+  .sos-modes .sos-heading,
+  .sos-logic .sos-heading, .sos-principles > article,
+  .sos-making .sos-heading, .sos-production-flow > article,
+  .sos-production-flow > i, .sos-timeline, .sos-making-summary
+) {
+  opacity: 0;
+  transform: translate3d(0, 36px, 0);
+}
+.sos-reveal-enabled.is-sos-reveal-ready :where(
+  .sos-hero .sos-eyebrow, .sos-hero h1, .sos-hero .sos-kicker,
+  .sos-hero-copy > p:not(.sos-eyebrow):not(.sos-kicker),
+  .sos-hero .sos-skill-tags
+) { transform: translate3d(-40px, 0, 0); }
+.sos-reveal-enabled.is-sos-reveal-ready :where(.sos-hero .sos-hero-media) {
+  transform: translate3d(40px, 0, 0);
+}
+.sos-reveal-enabled.is-sos-reveal-ready :where(.sos-final-film .sos-film, .sos-timeline) {
+  transform: translate3d(0, 24px, 0) scale(.96);
+}
+
+.sos-hero.is-sos-visible :is(
+  .sos-eyebrow, h1, .sos-kicker,
+  .sos-hero-copy > p:not(.sos-eyebrow):not(.sos-kicker), .sos-skill-tags
+) {
+  opacity: 1;
+  transform: none;
+  animation: sos-reveal-left 780ms cubic-bezier(.16, .76, .24, 1) backwards;
+}
+.sos-hero.is-sos-visible .sos-hero-media {
+  opacity: 1;
+  transform: none;
+  animation: sos-reveal-right 840ms cubic-bezier(.16, .76, .24, 1) 130ms backwards;
+}
+.sos-final-film.is-sos-visible :is(.sos-heading, .sos-film),
+.sos-modes.is-sos-visible .sos-heading,
+.sos-logic.is-sos-visible :is(.sos-heading, .sos-principles > article),
+.sos-making.is-sos-visible :is(.sos-heading, .sos-production-flow > article, .sos-production-flow > i, .sos-making-summary) {
+  opacity: 1;
+  transform: none;
+  animation: sos-reveal-up 660ms cubic-bezier(.16, .76, .24, 1) backwards;
+}
+.sos-final-film.is-sos-visible .sos-film,
+.sos-making.is-sos-visible .sos-timeline {
+  opacity: 1;
+  transform: none;
+  animation: sos-reveal-media 720ms cubic-bezier(.16, .76, .24, 1) backwards;
+}
+
+.sos-hero.is-sos-visible h1 { animation-delay: 80ms; }
+.sos-hero.is-sos-visible .sos-kicker { animation-delay: 150ms; }
+.sos-hero.is-sos-visible .sos-hero-copy > p:nth-of-type(3) { animation-delay: 250ms; }
+.sos-hero.is-sos-visible .sos-hero-copy > p:nth-of-type(4) { animation-delay: 330ms; }
+.sos-hero.is-sos-visible .sos-skill-tags { animation-delay: 410ms; }
+.sos-final-film.is-sos-visible .sos-film { animation-delay: 140ms; }
+.sos-logic.is-sos-visible .sos-principles > article:nth-child(1) { animation-delay: 140ms; }
+.sos-logic.is-sos-visible .sos-principles > article:nth-child(2) { animation-delay: 260ms; }
+.sos-logic.is-sos-visible .sos-principles > article:nth-child(3) { animation-delay: 380ms; }
+.sos-making.is-sos-visible .sos-production-flow > article:nth-of-type(1) { animation-delay: 140ms; }
+.sos-making.is-sos-visible .sos-production-flow > i:nth-of-type(1) { animation-delay: 220ms; }
+.sos-making.is-sos-visible .sos-production-flow > article:nth-of-type(2) { animation-delay: 280ms; }
+.sos-making.is-sos-visible .sos-production-flow > i:nth-of-type(2) { animation-delay: 360ms; }
+.sos-making.is-sos-visible .sos-production-flow > article:nth-of-type(3) { animation-delay: 420ms; }
+.sos-making.is-sos-visible .sos-timeline { animation-delay: 520ms; }
+.sos-making.is-sos-visible .sos-making-summary { animation-delay: 620ms; }
+
+@keyframes sos-reveal-left {
+  from { opacity: 0; transform: translate3d(-40px, 0, 0); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes sos-reveal-right {
+  from { opacity: 0; transform: translate3d(40px, 0, 0); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes sos-reveal-up {
+  from { opacity: 0; transform: translate3d(0, 36px, 0); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes sos-reveal-media {
+  from { opacity: 0; transform: translate3d(0, 24px, 0) scale(.96); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sos-reveal-enabled :where(
+    .sos-hero .sos-eyebrow, .sos-hero h1, .sos-hero .sos-kicker,
+    .sos-hero .sos-hero-media,
+    .sos-hero-copy > p:not(.sos-eyebrow):not(.sos-kicker),
+    .sos-hero .sos-skill-tags,
+    .sos-final-film .sos-heading, .sos-final-film .sos-film,
+    .sos-modes .sos-heading,
+    .sos-logic .sos-heading, .sos-principles > article,
+    .sos-making .sos-heading, .sos-production-flow > article,
+    .sos-production-flow > i, .sos-timeline, .sos-making-summary
+  ) { opacity: 1; transform: none; animation: none; }
+}

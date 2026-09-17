@@ -32,6 +32,213 @@
 .link-iteration>header{grid-template-columns:42px 1fr 32px 1fr}.link-iteration>header>svg{justify-self:center}.link-iteration article{min-height:0;padding-block:15px;grid-template-columns:42px minmax(0,1fr) 32px minmax(0,1fr)}.link-iteration article p{align-self:center}.link-final-interface>header{pointer-events:none}
 @media(max-width:760px){.link-tags{flex-wrap:wrap}.link-hero-stage{min-height:330px}.link-direction-problems article{grid-template-columns:28px max-content minmax(0,1fr)}.link-direction-panel.is-final{grid-template-columns:1fr;text-align:center}.link-direction-panel.is-final .link-direction-heading{justify-content:center}.link-direction-panel.is-final>p{grid-column:auto;justify-self:center}.link-logic-intro .link-section-title h2{white-space:normal}}
 
+/* Link-Lab motion: section-level triggers with internal sequencing. */
+.link-reveal-enabled.is-reveal-ready :where(
+  .link-hero-copy,
+  .link-hero-stage,
+  .link-context .link-section-title,
+  .link-context .link-body,
+  .link-context .link-step,
+  .link-judgement-section .link-section-title,
+  .link-judgement-section .link-research-lead,
+  .link-judgement-section .link-insights article,
+  .link-judgement-section .link-evidence,
+  .link-judgement-section .link-key-insight,
+  .link-direction-section .link-section-title,
+  .link-direction-top > .link-direction-panel,
+  .link-direction-problems,
+  .link-direction-panel.is-final,
+  .link-structure-section .link-logic-intro,
+  .link-structure-section .link-logic-row,
+  .link-structure-section .link-flow,
+  .link-experience > .shell > .link-section-title,
+  .link-experience-card .link-experience-copy,
+  .link-experience-card .link-device,
+  .link-iteration-section .link-section-title,
+  .link-iteration > header > div,
+  .link-iteration article > p,
+  .link-iteration-section .link-conclusion,
+  .link-final-interface > header,
+  .link-final-primary .link-device,
+  .link-supporting-label,
+  .link-final-supporting
+) {
+  opacity: 0;
+  transform: translate3d(0, 36px, 0);
+}
+.link-reveal-enabled.is-reveal-ready .link-direction-top > .link-direction-panel,
+.link-reveal-enabled.is-reveal-ready .link-iteration > header > div:first-child,
+.link-reveal-enabled.is-reveal-ready .link-iteration article > p:first-of-type {
+  transform: translate3d(-40px, 0, 0);
+}
+.link-reveal-enabled.is-reveal-ready .link-direction-problems,
+.link-reveal-enabled.is-reveal-ready .link-iteration > header > div:last-child,
+.link-reveal-enabled.is-reveal-ready .link-iteration article > p:last-of-type {
+  transform: translate3d(40px, 0, 0);
+}
+.link-reveal-enabled.is-reveal-ready :where(
+  .link-experience-card .link-device,
+  .link-final-primary .link-device,
+  .link-final-supporting
+) {
+  transform: translate3d(0, 24px, 0) scale(.95);
+}
+
+.link-hero.is-link-visible :is(.link-hero-copy, .link-hero-stage),
+.link-context.is-link-visible :is(.link-section-title, .link-body, .link-step),
+.link-judgement-section.is-link-visible :is(.link-section-title, .link-research-lead, .link-insights article, .link-evidence, .link-key-insight),
+.link-direction-section.is-link-visible :is(.link-section-title, .link-direction-panel.is-final),
+.link-structure-section.is-link-visible :is(.link-logic-intro, .link-logic-row, .link-flow),
+.link-experience.is-link-visible > .shell > .link-section-title,
+.link-experience-card.is-link-visible .link-experience-copy,
+.link-iteration-section.is-link-visible :is(.link-section-title, .link-conclusion),
+.link-final-section.is-link-visible .link-final-interface > header,
+.link-final-supporting.is-link-visible,
+.link-final-interface:has(.link-final-supporting.is-link-visible) .link-supporting-label {
+  opacity: 1;
+  transform: none;
+  animation: link-reveal-up 600ms cubic-bezier(.2, .72, .24, 1) backwards;
+}
+.link-direction-section.is-link-visible .link-direction-top > .link-direction-panel,
+.link-iteration-section.is-link-visible :is(.link-iteration > header > div:first-child, .link-iteration article > p:first-of-type) {
+  opacity: 1;
+  transform: none;
+  animation: link-reveal-left 620ms cubic-bezier(.2, .72, .24, 1) backwards;
+}
+.link-direction-section.is-link-visible .link-direction-problems,
+.link-iteration-section.is-link-visible :is(.link-iteration > header > div:last-child, .link-iteration article > p:last-of-type) {
+  opacity: 1;
+  transform: none;
+  animation: link-reveal-right 620ms cubic-bezier(.2, .72, .24, 1) backwards;
+}
+.link-experience-card.is-link-visible .link-device,
+.link-final-section.is-link-visible .link-final-primary .link-device {
+  opacity: 1;
+  transform: none;
+  animation: link-reveal-media 650ms cubic-bezier(.2, .72, .24, 1) backwards;
+}
+.link-final-supporting.is-link-visible {
+  animation-name: link-reveal-media;
+  animation-duration: 650ms;
+}
+
+.link-hero.is-link-visible .link-hero-stage { animation-delay: 120ms; }
+.link-context.is-link-visible .link-body { animation-delay: 120ms; }
+.link-context.is-link-visible .link-step:nth-child(1) { animation-delay: 240ms; }
+.link-context.is-link-visible .link-step:nth-child(2) { animation-delay: 360ms; }
+.link-context.is-link-visible .link-step:nth-child(3) { animation-delay: 480ms; }
+.link-judgement-section.is-link-visible .link-research-lead { animation-delay: 100ms; }
+.link-judgement-section.is-link-visible .link-insights article:nth-child(1) { animation-delay: 220ms; }
+.link-judgement-section.is-link-visible .link-insights article:nth-child(2) { animation-delay: 340ms; }
+.link-judgement-section.is-link-visible .link-insights article:nth-child(3) { animation-delay: 460ms; }
+.link-judgement-section.is-link-visible .link-evidence { animation-delay: 580ms; }
+.link-judgement-section.is-link-visible .link-key-insight { animation-delay: 700ms; }
+.link-direction-section.is-link-visible .link-direction-top > .link-direction-panel { animation-delay: 120ms; }
+.link-direction-section.is-link-visible .link-direction-problems { animation-delay: 220ms; }
+.link-direction-section.is-link-visible .link-direction-panel.is-final { animation-delay: 340ms; }
+.link-structure-section.is-link-visible .link-logic-row:nth-child(2) { animation-delay: 120ms; }
+.link-structure-section.is-link-visible .link-logic-row:nth-child(3) { animation-delay: 230ms; }
+.link-structure-section.is-link-visible .link-logic-row:nth-child(4) { animation-delay: 340ms; }
+.link-structure-section.is-link-visible .link-logic-row:nth-child(5) { animation-delay: 450ms; }
+.link-structure-section.is-link-visible .link-logic-row:nth-child(6) { animation-delay: 560ms; }
+.link-structure-section.is-link-visible .link-flow { animation-delay: 670ms; }
+.link-experience-card.is-link-visible .link-device { animation-delay: 120ms; }
+.link-experience-card.is-link-visible .link-device:nth-of-type(2) { animation-delay: 230ms; }
+.link-iteration-section.is-link-visible .link-iteration > header > div:first-child { animation-delay: 120ms; }
+.link-iteration-section.is-link-visible .link-iteration > header > div:last-child { animation-delay: 240ms; }
+.link-iteration-section.is-link-visible .link-iteration article:nth-child(2) > p:first-of-type { animation-delay: 260ms; }
+.link-iteration-section.is-link-visible .link-iteration article:nth-child(2) > p:last-of-type { animation-delay: 380ms; }
+.link-iteration-section.is-link-visible .link-iteration article:nth-child(3) > p:first-of-type { animation-delay: 380ms; }
+.link-iteration-section.is-link-visible .link-iteration article:nth-child(3) > p:last-of-type { animation-delay: 500ms; }
+.link-iteration-section.is-link-visible .link-iteration article:nth-child(4) > p:first-of-type { animation-delay: 500ms; }
+.link-iteration-section.is-link-visible .link-iteration article:nth-child(4) > p:last-of-type { animation-delay: 620ms; }
+.link-iteration-section.is-link-visible .link-conclusion { animation-delay: 740ms; }
+.link-final-section.is-link-visible .link-final-primary .link-device:nth-child(1) { animation-delay: 120ms; }
+.link-final-section.is-link-visible .link-final-primary .link-device:nth-child(2) { animation-delay: 230ms; }
+.link-final-section.is-link-visible .link-final-primary .link-device:nth-child(3) { animation-delay: 340ms; }
+.link-final-section.is-link-visible .link-final-primary .link-device:nth-child(4) { animation-delay: 450ms; }
+.link-final-interface:has(.link-final-supporting.is-link-visible) .link-supporting-label { animation-delay: 0ms; }
+.link-final-supporting.is-link-visible { animation-delay: 120ms; }
+
+@keyframes link-reveal-up {
+  from { opacity: 0; transform: translate3d(0, 36px, 0); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes link-reveal-left {
+  from { opacity: 0; transform: translate3d(-40px, 0, 0); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes link-reveal-right {
+  from { opacity: 0; transform: translate3d(40px, 0, 0); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes link-reveal-media {
+  from { opacity: 0; transform: translate3d(0, 24px, 0) scale(.95); }
+  to { opacity: 1; transform: none; }
+}
+@media (hover:hover) and (pointer:fine) {
+  .link-case :is(
+    .link-step,
+    .link-insights article,
+    .link-key-insight,
+    .link-direction-panel,
+    .link-direction-problems article,
+    .link-experience-card
+  ) {
+    transition: transform 220ms ease-out, box-shadow 220ms ease-out, border-color 220ms ease-out;
+  }
+  .link-case :is(
+    .link-step,
+    .link-insights article,
+    .link-key-insight,
+    .link-direction-panel,
+    .link-direction-problems article,
+    .link-experience-card
+  ):hover {
+    transform: translateY(-4px);
+    border-color: #bfd3e6;
+    box-shadow: 0 10px 24px rgba(41, 79, 119, .09);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .link-reveal-enabled :is(
+    .link-hero-copy,
+    .link-hero-stage,
+    .link-context .link-section-title,
+    .link-context .link-body,
+    .link-context .link-step,
+    .link-judgement-section .link-section-title,
+    .link-judgement-section .link-research-lead,
+    .link-judgement-section .link-insights article,
+    .link-judgement-section .link-evidence,
+    .link-judgement-section .link-key-insight,
+    .link-direction-section .link-section-title,
+    .link-direction-top > .link-direction-panel,
+    .link-direction-problems,
+    .link-direction-panel.is-final,
+    .link-structure-section .link-logic-intro,
+    .link-structure-section .link-logic-row,
+    .link-structure-section .link-flow,
+    .link-experience > .shell > .link-section-title,
+    .link-experience-card .link-experience-copy,
+    .link-experience-card .link-device,
+    .link-iteration-section .link-section-title,
+    .link-iteration > header > div,
+    .link-iteration article > p,
+    .link-iteration-section .link-conclusion,
+    .link-final-interface > header,
+    .link-final-primary .link-device,
+    .link-supporting-label,
+    .link-final-supporting
+  ) {
+    opacity: 1;
+    transform: none;
+    animation: none;
+    transition: none;
+  }
+}
+
 /* Latest annotated adjustments only. */
 .link-iteration>header>svg{display:none}
 .link-hero-grid{grid-template-columns:480px minmax(0,1fr);gap:9px}
@@ -60,3 +267,124 @@
 @media(min-width:761px){.link-iteration>header>div:first-child{grid-column:2}.link-iteration>header>div:last-child{grid-column:4}}
 @media(min-width:901px) and (max-width:1100px){.link-hero-grid{gap:32px}.link-hero-stage{gap:16px;padding-inline:28px}.link-hero-stage .is-side{width:112px}.link-hero-stage .is-main{width:142px}}
 @media(max-width:900px){.link-hero-grid{grid-template-columns:1fr;gap:56px}.link-tags{flex-wrap:wrap}}
+
+/* Keep text in explicit tracks, independent of arrow visibility. */
+.link-iteration > header,
+.link-iteration article {
+  grid-template-columns: 42px minmax(0, 1fr) 32px minmax(0, 1fr);
+}
+.link-iteration > header > div,
+.link-iteration article > p { min-width: 0; width: 100%; max-width: none; }
+.link-iteration article > p { white-space: normal; word-break: normal; overflow-wrap: break-word; }
+.link-iteration > header > div:first-child,
+.link-iteration article > p:first-of-type { grid-column: 2; grid-row: 1; }
+.link-iteration > header > div:last-child,
+.link-iteration article > p:last-of-type { grid-column: 4; grid-row: 1; }
+.link-iteration-no { grid-column: 1; grid-row: 1; }
+.link-iteration-arrow { grid-column: 3; grid-row: 1; }
+@media (900px <= width < 1200px) {
+  .link-iteration > header,
+  .link-iteration article { grid-template-columns: 32px minmax(0, 1fr) 24px minmax(0, 1fr); gap: 16px; }
+}
+@media (width < 900px) {
+  .link-iteration > header,
+  .link-iteration article { grid-template-columns: 32px minmax(0, 1fr); column-gap: 14px; row-gap: 12px; }
+  .link-iteration > header > div:last-child,
+  .link-iteration article > p:last-of-type { grid-column: 2; grid-row: 3; }
+  .link-iteration > header > svg,
+  .link-iteration .link-iteration-arrow {
+    display: block;
+    grid-column: 2;
+    grid-row: 2;
+    width: 17px;
+    height: 17px;
+    justify-self: start;
+    transform: rotate(90deg);
+  }
+  .link-iteration article { padding-block: 20px; }
+}
+
+/* Full responsive pass: core experience and final interface. */
+.link-experience-card,
+.link-experience-copy,
+.link-experience-stage { min-width: 0; }
+.link-experience-stage.is-pair {
+  width: 100%;
+  max-width: 100%;
+  flex-wrap: nowrap;
+  overflow: hidden;
+}
+.link-final-supporting {
+  width: 100%;
+  max-width: 100%;
+  margin-inline: auto;
+  flex-wrap: wrap;
+  justify-content: center;
+  overflow: visible;
+}
+@media (900px <= width < 1200px) {
+  .link-experience-card:first-child { grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 40px; }
+  .link-experience-card:first-child .link-experience-stage { padding-inline: 20px; }
+  .link-experience-stage.is-pair .link-device { width: min(42%, 168px); }
+}
+@media (width < 900px) {
+  .link-experience-card:first-child { grid-template-columns: minmax(0, 1fr); }
+  .link-experience-card .link-experience-copy { width: 100%; max-width: none; }
+  .link-experience-card:first-child .link-experience-stage { width: 100%; min-height: 0; }
+  .link-experience-stage.is-pair { justify-content: center; gap: 18px; }
+  .link-experience-stage.is-pair .link-device { flex: 0 1 168px; width: min(42%, 168px); min-width: 0; }
+  .link-final-supporting { gap: 14px; }
+}
+@media (width < 480px) {
+  .link-experience-stage.is-pair { flex-direction: column; align-items: center; overflow: visible; }
+  .link-experience-stage.is-pair .link-device { flex: 0 0 auto; width: min(100%, 150px); max-width: 150px; }
+  .link-final-supporting { gap: 12px; }
+  .link-final-supporting .link-device { flex: 0 0 78px; width: 78px; }
+}
+@media (max-width: 640px) {
+  .link-hero-stage { gap: 10px; padding-inline: 16px; }
+  .link-hero-stage .is-side { width: 27%; transform: none; }
+  .link-hero-stage .is-main { width: 34%; }
+}
+
+/* Final Interface devices: the screenshots are frameless, so the CSS frame
+   scales with the rendered device instead of keeping desktop-sized details. */
+.link-final-primary {
+  gap: clamp(9px, 1.4vw, 18px);
+}
+.link-final-primary .link-device {
+  width: min(22%, 140px);
+}
+@media (max-width: 900px) {
+  .link-final-interface .link-device {
+    padding: clamp(2px, .42vw, 4px);
+    border-width: 1px;
+    border-radius: clamp(13px, 2.45vw, 22px);
+  }
+  .link-final-interface .link-device-screen {
+    border-radius: clamp(10px, 2vw, 18px);
+  }
+  .link-final-interface .link-device-island {
+    top: clamp(5px, 1vw, 9px);
+    height: clamp(5px, 1vw, 9px);
+  }
+  .link-final-primary {
+    width: 100%;
+    overflow: visible;
+  }
+  .link-final-primary .link-device {
+    flex: 0 1 140px;
+    min-width: 0;
+  }
+  .link-final-supporting .link-device {
+    padding: clamp(2px, .32vw, 3px);
+    border-radius: clamp(11px, 1.8vw, 16px);
+  }
+  .link-final-supporting .link-device-screen {
+    border-radius: clamp(8px, 1.45vw, 13px);
+  }
+}
+@media (max-width: 640px) {
+  .link-final-primary { gap: 7px; }
+  .link-final-primary .link-device { width: 23%; }
+}
